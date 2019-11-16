@@ -37,7 +37,11 @@
     }
 %>
 <%@ page import="java.sql.*" %>
-
+<%@ page import="java.util.List" %>
+<%@ page import="News" %>
+<%@ page import="NewsDao" %>
+<%--<jsp:useBean id="News" class="News"></jsp:useBean>--%>
+<%--<jsp:useBean id="NewsDao" class="NewsDao"></jsp:useBean>--%>
 
 
 <html lang="en">
@@ -96,6 +100,14 @@
     }
 %>
 
+<%
+    dbUtil.closeCon();
+    NewsDao newsDao = new NewsDao();
+    String type = "1";
+//    String type = request.getParameter("type");
+    List<News> newsList = newsDao.typelist(type);
+    request.setAttribute("news",newsList);//遍历集合
+%>
 
 <!--新闻中心右边其他新闻列表部分-->
 <div class="new_center-right">
@@ -106,18 +118,33 @@
             <span><a href=""><img src="../img/换一换.png" alt=""></a></span>
         </div>
     </div>
+
+
+
     <ul class="new_list">
-        <li><a href="newinfo.html"><p><span>1</span>广州小伙训练鹦鹉垃圾分类 </p></a></li>
-        <li><a href="newinfo.html"><p><span>2</span>学劳模，做垃圾分类小达人</p></a></li>
-        <li><a href="newinfo.html"><p><span>3</span>南锣鼓巷“花式”推广垃圾分类</p></a></li>
-        <li><a href="newinfo.html"><p><span>4</span>天津：小志愿者助力社区环保 垃圾分类“画”出来</p></a></li>
-        <li><a href="newinfo.html"><p><span>5</span>垃圾桶装上“小芯片”浦东航头镇探索农村地区垃圾分类“智治”</p></a></li>
-        <li><a href="newinfo.html"><p><span>6</span>“小手拉大手，垃圾分类进校园”活动走进火马冲镇中心小学</p></a></li>
-        <li><a href="newinfo.html"><p><span>7</span>景宁学雷锋青年志愿服务队小志愿者在石印广场宣传垃圾分类</p></a></li>
-        <li><a href="newinfo.html"><p><span>8</span>瞻前不顾后 部分城市垃圾分类流于形式</p></a></li>
-        <li><a href="newinfo.html"><p><span>9</span>广深居民备战垃圾分类 天猫垃圾桶销量广东第一</p></a></li>
-        <li><a href="newinfo.html"><p><span>10</span>.西湖：这个小区垃圾分类投放点很贴心</p></a></li>
-    </ul></div>
+        <c:forEach items="${news}" var="news2">
+            <li><a href="newinfo.html"><p><span>${news2.id}</span><p>${news2.title}</p></a></li>
+        </c:forEach>
+    </ul>
+
+
+<%--    <ul class="new_list">--%>
+<%--        <li><a href="newinfo.html"><p><span>1</span>广州小伙训练鹦鹉垃圾分类 </p></a></li>--%>
+<%--        <li><a href="newinfo.html"><p><span>2</span>学劳模，做垃圾分类小达人</p></a></li>--%>
+<%--        <li><a href="newinfo.html"><p><span>3</span>南锣鼓巷“花式”推广垃圾分类</p></a></li>--%>
+<%--        <li><a href="newinfo.html"><p><span>4</span>天津：小志愿者助力社区环保 垃圾分类“画”出来</p></a></li>--%>
+<%--        <li><a href="newinfo.html"><p><span>5</span>垃圾桶装上“小芯片”浦东航头镇探索农村地区垃圾分类“智治”</p></a></li>--%>
+<%--        <li><a href="newinfo.html"><p><span>6</span>“小手拉大手，垃圾分类进校园”活动走进火马冲镇中心小学</p></a></li>--%>
+<%--        <li><a href="newinfo.html"><p><span>7</span>景宁学雷锋青年志愿服务队小志愿者在石印广场宣传垃圾分类</p></a></li>--%>
+<%--        <li><a href="newinfo.html"><p><span>8</span>瞻前不顾后 部分城市垃圾分类流于形式</p></a></li>--%>
+<%--        <li><a href="newinfo.html"><p><span>9</span>广深居民备战垃圾分类 天猫垃圾桶销量广东第一</p></a></li>--%>
+<%--        <li><a href="newinfo.html"><p><span>10</span>.西湖：这个小区垃圾分类投放点很贴心</p></a></li>--%>
+<%--    </ul>--%>
+</div>
+
+
+
+
 <div class="span2"><span>公告栏>></span></div>
 <!--公告栏部分-->
 <div class="footer">
